@@ -8,7 +8,7 @@ export default async function (UserID: string, email: string) {
     uri += `&excludeUserId=${UserID}`;
     getResIgnore = await axios.get(uri);
     if(!(getRes.status == 200 && getResIgnore.status == 200))return false;
-    if(getRes.data.userExists == !getResIgnore.data.userExists){
+    if(getRes.data.userExists && !getResIgnore.data.userExists){
       return true;
     }
     return false
