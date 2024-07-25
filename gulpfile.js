@@ -39,8 +39,9 @@ gulp.task("copy_files", function (done) {
 gulp.task("jest", function(done){
   exec("npx jest", (err, stdout, stderr) => {
     if(err){
-      done(stdout);
+      done(stderr);
     }
+    console.log(stderr);
     done();
   })
 })
