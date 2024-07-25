@@ -2,6 +2,7 @@ const gulp = require("gulp");
 const fs = require("node:fs");
 const path = require("node:path");
 const { exec } = require("node:child_process");
+const { stdout, stderr } = require("node:process");
 
 gulp.task("eslint", function (done) {
   exec("npx eslint .", (err, stdout, stderr) => {
@@ -35,6 +36,15 @@ gulp.task("copy_files", function (done) {
   done();
 });
 
+gulp.task("jest", function(done){
+  exec("npx jest", (err, stdout, stderr) => {
+    if(err){
+      done(stdout);
+    }
+    done();
+  })
+})
+
 gulp.task(
   "prebuild",
   gulp.series("eslint", "prettier", "create-dist", "copy_files"),
@@ -64,7 +74,7 @@ gulp.task("postbuild", function (done) {
 
 gulp.task("build", gulp.series("prebuild", "compile", "postbuild"));
 
-gulp.task("test", gulp.series("eslint", "compile_test"));
+gulp.task("test", gulp.series("eslint", "compile_test", "jest"));
 
 // ======================================
 
