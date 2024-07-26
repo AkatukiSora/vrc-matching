@@ -36,19 +36,19 @@ gulp.task("copy_files", function (done) {
   done();
 });
 
-gulp.task("jest", function(done){
+gulp.task("jest", function (done) {
   exec("npx jest", (err, stdout, stderr) => {
-    if(err){
+    if (err) {
       done(stderr);
     }
     console.log(stderr);
     done();
-  })
-})
+  });
+});
 
 gulp.task(
   "prebuild",
-  gulp.series("eslint", "prettier", "create-dist", "copy_files"),
+  gulp.series("eslint", "prettier", "jest", "create-dist", "copy_files"),
 );
 
 gulp.task("compile", function (done) {
